@@ -1,0 +1,25 @@
+{
+  "name": "cienvia",
+  "version": "0.1.0",
+  "description": "Cienvia: protótipo do fluxo central de eventos científicos",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "test": "vitest run",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.14",
+    "@hono/node-server": "^1.19.18",
+    "hono": "^4.13.16",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "private": true,
+  "type": "module"
+}
