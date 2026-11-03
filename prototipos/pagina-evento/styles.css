@@ -461,3 +461,25 @@ dialog::backdrop { background: rgba(8, 24, 30, .55); }
 .logo-tile.txt .wm { font: 600 1.125rem/1.15 var(--f-display); color: var(--plate-ink); overflow-wrap: anywhere; }
 .logo-tile.txt.compact .wm { font-size: .9375rem; }
 @media (max-width: 40rem) { .logo-wall { --k: .85; grid-template-columns: repeat(2, minmax(0, 1fr)); } .logo-wall.dense { grid-template-columns: repeat(3, minmax(0, 1fr)); } .logo-wall.one { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Esquema 3D do campus ---------- */
+:root { --gate: #0E3B47; --gate-ink: #FFFFFF; --map-ground: #DCE6E8; --map-edge: #A9BBBF; --map-pave: #C9D3D5; --map-line: #9AAEB2; --map-shadow: rgba(16,35,43,.14); --map-bg: #EEF3F2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --gate: #6CCFC3; --gate-ink: #062018; --map-ground: #22383F; --map-edge: #0E1D22; --map-pave: #2C454D; --map-line: #48646C; --map-shadow: rgba(0,0,0,.35); --map-bg: #0F2026; } }
+:root[data-theme="dark"] { --gate: #6CCFC3; --gate-ink: #062018; --map-ground: #22383F; --map-edge: #0E1D22; --map-pave: #2C454D; --map-line: #48646C; --map-shadow: rgba(0,0,0,.35); --map-bg: #0F2026; }
+.campus-wrap { display: grid; gap: var(--s-5); align-items: start; }
+@media (min-width: 60rem) { .campus-wrap { grid-template-columns: minmax(0, 1fr) 18rem; } }
+.campus-fig { margin: 0; background: var(--map-bg); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s-3); min-width: 0; }
+.campus3d { display: block; width: 100%; height: auto; max-height: 44rem; }
+.campus3d text { font-family: var(--f-body); paint-order: stroke; stroke: var(--map-bg); stroke-width: 3px; stroke-linejoin: round; }
+.c3-label { font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+.c3-label.key { font-size: 12px; font-weight: 700; }
+.c3-letter { font-size: 12px; font-weight: 700; fill: #fff; stroke: none !important; text-anchor: middle; }
+.c3-street { font-size: 10px; fill: var(--ink-2); font-style: italic; text-anchor: middle; }
+.c3-gnum { font-size: 10px; font-weight: 700; fill: var(--gate-ink); stroke: none !important; text-anchor: middle; }
+.c3-key { stroke-width: 1.4; }
+.campus-legend { display: grid; gap: var(--s-3); align-content: start; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; font-size: var(--t-sm); }
+.legend li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .6rem; align-items: start; }
+.legend .sw { width: 1rem; height: 1rem; border-radius: 3px; margin-top: .2rem; border: 1px solid rgba(0,0,0,.2); }
+.legend.gates b { width: 1.4rem; height: 1.4rem; border-radius: 50%; background: var(--gate); color: var(--gate-ink); display: grid; place-items: center; font-size: .75rem; }
+@media (max-width: 48rem) { .campus-fig { overflow-x: auto; } .campus3d { min-width: 42rem; } .campus-fig::after { content: "Arraste para o lado para ver o mapa inteiro."; display: block; font-size: var(--t-xs); color: var(--ink-2); margin-top: .5rem; position: sticky; left: 0; } }

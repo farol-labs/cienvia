@@ -699,7 +699,26 @@
     const L = E.local;
     $("#v-local").innerHTML = `
       ${pageTitle("local", "Local e acesso", "UERJ, Campus Maracanã", esc(L.endereco))}
-      <div class="wrap"><section class="section"><div class="grid g2" style="gap:var(--s-6);align-items:start">
+      <div class="wrap">
+        <section class="section" aria-labelledby="h-mapa">
+          <div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">Mapa do campus</p><h2 id="h-mapa">Onde fica cada coisa</h2></div><p class="muted small">Esquema ilustrativo em 3D, fora de escala, desenhado a partir do mapa oficial do campus.</p></div>
+          <div class="campus-wrap">
+            <figure class="campus-fig">${window.campus3D ? window.campus3D() : ""}</figure>
+            <aside class="campus-legend" aria-label="Legenda do mapa">
+              <h3 class="eyebrow">Para o encontro</h3>
+              <ul class="legend">
+                <li><span class="sw" style="background:#E3A21A"></span><span><b>Bloco F</b>, Pavilhão João Lyra Filho: salas das sessões temáticas (GEO, 4º andar; FAF, 8º andar)</span></li>
+                <li><span class="sw" style="background:#2F86E0"></span><span>Demais blocos do pavilhão (A a E)</span></li>
+              </ul>
+              <h3 class="eyebrow">Entradas</h3>
+              <ul class="legend gates">
+                <li><b>1</b><span>Av. Rei Pelé</span></li><li><b>2</b><span>Av. Rei Pelé, sul</span></li><li><b>3</b><span>Av. Prof. Manoel de Abreu</span></li><li><b>4</b><span>Rua Rad. Waldir Amaral</span></li><li><b>5</b><span>Rua São Francisco Xavier, junto ao estacionamento</span></li><li><b>7</b><span>Norte, junto ao Centro Cultural</span></li>
+              </ul>
+              <p class="small muted">A página do evento não diz em que prédio ficam os auditórios 71 e 91, por isso eles não estão marcados.</p>
+            </aside>
+          </div>
+        </section>
+        <section class="section"><div class="grid g2" style="gap:var(--s-6);align-items:start">
         <div class="stack" style="gap:var(--s-5)">
           <div class="stack"><h2 style="font-size:var(--t-xl)">Como chegar</h2><ul class="transit">${L.transporte.map((t) => `<li><b>${esc(t.modo)}</b><span>${esc(t.texto)}</span></li>`).join("")}</ul></div>
           <div class="stack"><h2 style="font-size:var(--t-xl)">No campus</h2>
@@ -714,8 +733,6 @@
           </div>
         </div>
         <div class="map-card">
-          <div class="map-ph" aria-hidden="true"><svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice"><rect width="320" height="200" fill="var(--surface-2)"/><g stroke="var(--line-strong)" stroke-width="7" fill="none" stroke-linecap="round"><path d="M-10 140 C80 120 160 150 330 110"/><path d="M60 -10 L120 210"/><path d="M220 -10 C210 80 240 140 230 210"/></g><g stroke="var(--line)" stroke-width="3" fill="none"><path d="M0 60 H320"/><path d="M0 180 C120 170 200 190 320 175"/></g><rect x="128" y="70" width="70" height="44" rx="4" fill="var(--verde)" opacity=".22"/><circle cx="163" cy="92" r="7" fill="var(--destaque)"/></svg></div>
-          <p class="small muted">Esquema ilustrativo, fora de escala.</p>
           <div class="btn-row"><a class="btn" href="${esc(L.mapa)}" rel="noopener">${I.pin} Abrir no mapa ${I.ext}</a><a class="btn secondary" href="${esc(L.comoChegar)}" rel="noopener">Como chegar à UERJ ${I.ext}</a></div>
           <p class="note"><b>Correção aplicada:</b> o link “como chegar” da página original tem o protocolo duplicado (<code>http://https://</code>) e não abre.</p>
         </div>

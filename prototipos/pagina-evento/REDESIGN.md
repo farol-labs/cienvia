@@ -251,5 +251,6 @@ Feita com Chromium (Playwright) sobre o protótipo local, em 02 e 03/11/2026:
 | `styles.css` | Tokens (claro e escuro), componentes, responsivo, impressão |
 | `app.js` | Fases, roteamento, renderização das visões, busca, grade, .ics, formulário |
 | `data.js` | Conteúdo do evento extraído da fonte pública, com data de coleta; apoio, patrocínio e registro de fotos |
+| `campus3d.js` | Esquema 3D do Campus Maracanã em SVG, desenhado sobre o mapa oficial enviado pelo usuário; Bloco F (salas das sessões) destacado |
 | `img/logos/` | 13 logotipos recortados da página oficial |
 | `REDESIGN.md` | Este documento |
