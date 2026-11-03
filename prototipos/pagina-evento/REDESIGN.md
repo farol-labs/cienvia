@@ -13,8 +13,9 @@ Legenda, a mesma dos documentos de produto em `docs/`:
 1. **Não houve inspeção visual do site original.** O proxy deste ambiente bloqueou o acesso direto a `sigeventos.ufrn.br` (curl na nuvem e no seu computador retornaram 403). As 8 páginas públicas foram lidas por um leitor automatizado que converte o HTML em texto. Consequência: os problemas de conteúdo, estrutura e marcação são **[FATO]**; tudo o que depende de ver a página renderizada (layout em celular e tablet, contraste real, tamanho de toque) é **[HIPÓTESE]** até alguém abrir o site em um navegador. Isso afeta diretamente o item "avaliar desktop, tablet e mobile" do pedido: ele está avaliado só no protótipo novo, não no original.
 2. **Nomes e títulos foram transcritos pelo mesmo leitor automatizado.** Há risco de erro de grafia em nomes próprios. Antes de mostrar o protótipo fora da equipe, confira `data.js` contra a página original.
 3. **O evento já aconteceu (1 a 4/12/2025).** A página real hoje deveria estar no estado "encerrado". O protótipo abre nesse estado e tem um seletor "Simular fase" para mostrar os outros cinco estados.
-4. **Logotipos oficiais não foram usados.** Não há autorização de uso de ABEP, UERJ ou UFRN. Os espaços estão marcados.
-5. **Conflito com a proposta de MVP (doc 06).** O doc 06 deixa **programação científica, inscrição e anais fora do MVP**. Este protótipo mostra a visão completa porque o pedido foi "como ficaria a página de um evento". A seção 7 separa o que entra no MVP do que é Fase 2. Não use o protótipo como escopo de MVP sem essa leitura.
+4. **Logotipos:** os 13 logotipos de apoio e patrocínio foram recortados de uma captura da página oficial (enviada pelo usuário em 03/11/2026), em resolução de tela. Uso demonstrativo; uso público exige autorização de cada instituição. O logotipo da ABEP não aparece na fonte e ficou como texto.
+5. **Fotos de palestrantes:** não incluídas. Não há fotos com licença livre desses nomes, e o ambiente não consegue baixar imagens. `data.js` tem um registro `FOTOS` para adicioná-las; no produto, cada palestrante envia a própria foto com consentimento (direito de imagem e LGPD).
+6. **Conflito com a proposta de MVP (doc 06).** O doc 06 deixa **programação científica, inscrição e anais fora do MVP**. Este protótipo mostra a visão completa porque o pedido foi "como ficaria a página de um evento". A seção 7 separa o que entra no MVP do que é Fase 2. Não use o protótipo como escopo de MVP sem essa leitura.
 
 ---
 
@@ -33,7 +34,7 @@ Legenda, a mesma dos documentos de produto em `docs/`:
 | D7 | Informação contraditória sobre o local: a página do local fala em 6º, 7º e 8º andares; a programação usa salas no 4º e no 8º andar (Bloco F) e uma sala 6023 | `informacoes-uerj` × `programacao` | FATO | Médio | Baixo | P1 |
 | D8 | Nome do evento inconsistente: "Encontro Intermediário" no título, "Encontro Nacional dos GTs" no corpo da página do local; GT chamado ora "Projeções e Estimativas", ora "Estimativas e Projeções" | `principal/view`, `informacoes-uerj` | FATO | Baixo | Baixo | P2 |
 | D9 | Documentos sem formato, tamanho ou data; numeração decrescente (8 a 1); lista de restaurantes misturada com templates; um item hospedado no Google Drive fora da numeração | `documentos/view` | FATO | Médio | Baixo | P2 |
-| D10 | Apoiadores e patrocinadores aparecem só como imagem, sem nome em texto; seletor de idioma só com bandeiras | `principal/view` | FATO | Médio (acessibilidade, WCAG 1.1.1) | Baixo | P2 |
+| D10 | Apoiadores e patrocinador aparecem só como imagem, sem nome em texto alternativo legível; seletor de idioma só com bandeiras. Nomes identificados a partir de captura de tela enviada pelo usuário: 12 apoiadores e CAPES como patrocinadora | `principal/view` | FATO | Médio (acessibilidade, WCAG 1.1.1) | Baixo | P2 |
 | D11 | Texto de interface vazado ("Menu comprimido", ">" solto na trilha) | Todas as páginas | FATO | Baixo | Baixo | P3 |
 | D12 | Contato com "Organização do Evento" em branco | `contato/view` | FATO | Baixo | Baixo | P3 |
 | D13 | Minicurso cancelado aparece na página inicial com a mesma hierarquia dos ativos | `principal/view` | FATO | Baixo | Baixo | P3 |
@@ -153,7 +154,10 @@ Pílula de estado · botão (primário, secundário, fantasma) · chip de filtro
 - **Resultado vazio oferece saída:** "Há N resultados em outros dias".
 - **Movimento mínimo:** só a pílula "ao vivo" pulsa; tudo respeita `prefers-reduced-motion`.
 
-### 4.6 Ilustração
+### 4.6 Logotipos
+Parede com placa branca nos dois temas. Cada marca é dimensionada para a **mesma área visual** (largura = √(área × proporção), altura = √(área ÷ proporção), com teto de altura e largura), em vez de mesma altura ou mesma largura: assim uma marca horizontal longa (ICS UERJ) não domina e um selo quadrado (UERJ) não some. Instituições sem logotipo disponível usam a sigla em placa do mesmo tamanho.
+
+### 4.7 Ilustração
 Isolinhas e densidade de pontos geradas por código, com coordenadas da UERJ (22°54′S 43°14′W). Remete a demografia e clima sem fingir ser um dado. A legenda diz isso. No produto, a organização pode trocar por foto própria.
 
 ---
@@ -246,5 +250,6 @@ Feita com Chromium (Playwright) sobre o protótipo local, em 02 e 03/11/2026:
 | `index.html` | Estrutura, cabeçalho, rodapé, diálogo de exportação |
 | `styles.css` | Tokens (claro e escuro), componentes, responsivo, impressão |
 | `app.js` | Fases, roteamento, renderização das visões, busca, grade, .ics, formulário |
-| `data.js` | Conteúdo do evento extraído da fonte pública, com data de coleta |
+| `data.js` | Conteúdo do evento extraído da fonte pública, com data de coleta; apoio, patrocínio e registro de fotos |
+| `img/logos/` | 13 logotipos recortados da página oficial |
 | `REDESIGN.md` | Este documento |

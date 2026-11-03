@@ -158,6 +158,25 @@
   const statusPill = () => `<span class="status" data-s="${FASES[S.fase].s}">${esc(FASES[S.fase].label)}</span>`;
   const linkBtn = ([txt, view, alvo], i) => `<a class="btn ${i ? "secondary" : ""}" href="#${view}" ${alvo ? `data-alvo="${alvo}"` : ""}>${esc(txt)}${i ? "" : " " + I.arrow}</a>`;
   const pageTitle = (id, eyebrow, titulo, sub, extra = "") => `<div class="page-title"><div class="wrap"><p class="eyebrow">${esc(eyebrow)}</p><h1 id="h-${id}" tabindex="-1">${esc(titulo)}</h1>${sub ? `<p>${sub}</p>` : ""}${extra}</div></div>`;
+  // Avatar: foto quando registrada em window.FOTOS, iniciais caso contrário
+  const avatar = (n) => { const f = (window.FOTOS || {})[n]; return f ? `<img class="avatar" src="${esc(f)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<span class="avatar" aria-hidden="true">${esc(iniciais(n))}</span>`; };
+  // Dimensionamento óptico: todas as marcas ocupam a mesma área visual, com teto de altura e largura
+  function logoTile(l, o = {}) {
+    const A = o.area || 4600, maxH = o.maxH || 64, maxW = o.maxW || 168, r = l.w / l.h;
+    let w = Math.sqrt(A * r), h = Math.sqrt(A / r); const k = Math.min(1, maxH / h, maxW / w); w *= k; h *= k;
+    return `<li class="logo-tile${o.compact ? " compact" : ""}"><img src="img/logos/${esc(l.logo)}.png" alt="${esc(l.nome)}" width="${Math.round(w)}" height="${Math.round(h)}" style="width:calc(${w.toFixed(1)}px * var(--k));height:auto" loading="lazy" decoding="async">${o.cap === false ? "" : `<span class="cap">${esc(l.sigla)}</span>`}</li>`;
+  }
+  const textoTile = (sigla, nome, o = {}) => `<li class="logo-tile txt${o.compact ? " compact" : ""}"><span class="wm">${esc(sigla)}</span>${nome ? `<span class="cap">${esc(nome)}</span>` : ""}</li>`;
+  function blocoApoio() {
+    return `<div class="stack" style="gap:var(--s-5)">
+      <div class="grid g2" style="gap:var(--s-5)">
+        <div class="stack" style="gap:.6rem"><h3 class="eyebrow">Realização</h3><ul class="logo-wall one">${textoTile("ABEP", "Associação Brasileira de Estudos Populacionais")}</ul></div>
+        <div class="stack" style="gap:.6rem"><h3 class="eyebrow">Patrocínio</h3><ul class="logo-wall one">${E.patrocinio.map((l) => logoTile(l, { cap: false })).join("")}</ul></div>
+      </div>
+      <div class="stack" style="gap:.6rem"><h3 class="eyebrow">Apoio · ${E.apoio.length} instituições</h3><ul class="logo-wall">${E.apoio.map((l) => logoTile(l)).join("")}</ul></div>
+      <p class="small muted">Logotipos reproduzidos da página oficial do evento para fins de demonstração. O logotipo da ABEP não aparece na fonte. Uso público depende de autorização de cada instituição.</p>
+    </div>`;
+  }
   const naoInformado = (txt = "Não informado na página do evento") => `<span class="na">${esc(txt)}</span>`;
 
   /* ============ INÍCIO ============ */
@@ -261,8 +280,8 @@
         </section>
 
         <section class="section" aria-labelledby="h-conv">
-          <div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">${CONVIDADOS.length} pessoas</p><h2 id="h-conv">Palestrantes das mesas</h2></div><p class="muted small">Fotos não publicadas na fonte; iniciais no lugar.</p></div>
-          <div class="people collapsed" id="convidados">${CONVIDADOS.map(([n, i]) => `<div class="person"><span class="avatar" aria-hidden="true">${esc(iniciais(n))}</span><div><b>${esc(n)}</b><span>${esc(i || "")}</span></div></div>`).join("")}</div><div class="btn-row" style="margin-top:var(--s-4)"><button class="btn secondary sm" id="ver-convidados" aria-expanded="false" aria-controls="convidados">Ver as ${CONVIDADOS.length} pessoas</button></div>
+          <div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">${CONVIDADOS.length} pessoas</p><h2 id="h-conv">Palestrantes das mesas</h2></div><p class="muted small">Sem foto com licença de uso disponível; iniciais no lugar.</p></div>
+          <div class="people collapsed" id="convidados">${CONVIDADOS.map(([n, i]) => `<div class="person">${avatar(n)}<div><b>${esc(n)}</b><span>${esc(i || "")}</span></div></div>`).join("")}</div><div class="btn-row" style="margin-top:var(--s-4)"><button class="btn secondary sm" id="ver-convidados" aria-expanded="false" aria-controls="convidados">Ver as ${CONVIDADOS.length} pessoas</button></div>
         </section>
 
         <section class="section" aria-labelledby="h-mini">
@@ -272,20 +291,16 @@
 
         <section class="section" aria-labelledby="h-inst">
           <div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">Rede</p><h2 id="h-inst">Instituições participantes</h2></div><p class="muted small">Vínculos citados na programação e nas comissões.</p></div>
-          <ul class="inst-list">${INSTITUICOES.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
+          <ul class="logo-wall dense">${INSTITUICOES.map((i) => { const k = E.logoPorSigla[i]; const l = k && E.apoio.find((x) => x.logo === k); return l ? logoTile(l, { compact: true, area: 3600, maxH: 50, maxW: 128, cap: false }) : textoTile(i, "", { compact: true }); }).join("")}</ul>
         </section>
 
         <section class="section" aria-labelledby="h-local-teaser">
-          <div class="grid g2" style="gap:var(--s-6)">
-            <div class="stack"><p class="eyebrow">Local</p><h2 id="h-local-teaser">UERJ, Campus Maracanã</h2><p>${esc(E.local.endereco)}. Metrô Linha 2 e trem até a estação Maracanã.</p><div class="btn-row"><a class="btn secondary" href="#local">${I.pin} Como chegar</a></div></div>
-            <div class="stack"><p class="eyebrow">Realização e apoio</p>
-              <div class="partners" style="grid-template-columns:1fr 1fr">
-                <div class="partner-slot"><span class="small muted">Realização</span><div class="logo-ph"><div><b>ABEP</b>Logotipo oficial aguarda autorização</div></div></div>
-                <div class="partner-slot"><span class="small muted">Sede</span><div class="logo-ph"><div><b>UERJ</b>Logotipo oficial aguarda autorização</div></div></div>
-              </div>
-              <p class="note"><b>Apoio e patrocínio:</b> a página original mostra logotipos sem nome em texto. Os apoiadores não puderam ser identificados com segurança e foram omitidos.</p>
-            </div>
-          </div>
+          <div class="stack" style="max-width:62ch"><p class="eyebrow">Local</p><h2 id="h-local-teaser">UERJ, Campus Maracanã</h2><p>${esc(E.local.endereco)}. Metrô Linha 2 e trem até a estação Maracanã.</p><div class="btn-row"><a class="btn secondary" href="#local">${I.pin} Como chegar</a></div></div>
+        </section>
+
+        <section class="section" aria-labelledby="h-apoio">
+          <div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">Quem faz o encontro</p><h2 id="h-apoio">Realização, patrocínio e apoio</h2></div></div>
+          ${blocoApoio()}
         </section>
       </div>`;
     desenharArte();
@@ -709,15 +724,11 @@
 
   /* ============ ORGANIZAÇÃO ============ */
   function renderOrganizacao() {
-    const grid = (arr) => `<div class="people">${arr.map(([n, i]) => `<div class="person"><span class="avatar" aria-hidden="true">${esc(iniciais(n))}</span><div><b>${esc(n)}</b><span>${esc(i)}</span></div></div>`).join("")}</div>`;
+    const grid = (arr) => `<div class="people">${arr.map(([n, i]) => `<div class="person">${avatar(n)}<div><b>${esc(n)}</b><span>${esc(i)}</span></div></div>`).join("")}</div>`;
     $("#v-organizacao").innerHTML = `
       ${pageTitle("organizacao", "Institucional", "Organização", "Realização dos Grupos de Trabalho da ABEP, com sede na UERJ.")}
       <div class="wrap">
-        <section class="section"><div class="partners">
-          <div class="partner-slot"><span class="small muted">Realização</span><div class="logo-ph"><div><b>ABEP</b>Associação Brasileira de Estudos Populacionais</div></div></div>
-          <div class="partner-slot"><span class="small muted">Sede</span><div class="logo-ph"><div><b>UERJ</b>Universidade do Estado do Rio de Janeiro</div></div></div>
-          <div class="partner-slot"><span class="small muted">Apoio e patrocínio</span><div class="logo-ph"><div><b>Não identificados</b>A fonte exibe apenas logotipos, sem nome</div></div></div>
-        </div><p class="small muted" style="margin-top:.75rem">Os logotipos oficiais entram aqui após autorização de uso de cada instituição.</p></section>
+        <section class="section" aria-labelledby="h-apoio-org"><h2 id="h-apoio-org" class="sr-only">Realização, patrocínio e apoio</h2>${blocoApoio()}</section>
         <section class="section" aria-labelledby="h-co"><div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">${E.comissaoOrganizadora.length} pessoas</p><h2 id="h-co">Comissão organizadora</h2></div></div>${grid(E.comissaoOrganizadora)}</section>
         <section class="section" aria-labelledby="h-cc"><div class="section-head"><div class="stack" style="gap:.4rem"><p class="eyebrow">${E.comiteCientifico.length} pessoas</p><h2 id="h-cc">Comitê científico</h2></div></div>${grid(E.comiteCientifico)}</section>
         <section class="section" aria-labelledby="h-cgt"><div class="section-head"><h2 id="h-cgt">Coordenações dos GTs</h2></div><p class="note">A página do evento não lista as coordenações dos quatro GTs. No Cienvia, cada GT teria a própria página com coordenação, sessões e trabalhos.</p></section>

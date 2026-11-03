@@ -331,3 +331,118 @@ window.PROGRAMACAO = [
     titulo: "Minicurso 2: Geotecnologias aplicadas ao Censo Demográfico de 2022",
     pessoas: [["Ministrante", "Tathiane Anazawa", "Unicamp"], ["Ministrante", "Ana Paula Dal'Asta", "INPE"]] }
 ];
+
+/*
+ * Apoio e patrocínio: logotipos exibidos na página principal do SIGEventos.
+ * Recortados de uma captura de tela enviada pelo usuário em 03/11/2026 (a página
+ * original não traz os nomes em texto). Resolução limitada à da captura.
+ * Uso demonstrativo: confirmar autorização de cada instituição antes de uso público.
+ * w e h: tamanho em pixels de cada arquivo, usado para o dimensionamento óptico.
+ */
+window.EVENTO.apoio = [
+ {
+  "sigla": "NEPO",
+  "nome": "Núcleo de Estudos de População Elza Berquó, Unicamp",
+  "logo": "nepo-unicamp",
+  "w": 83,
+  "h": 90
+ },
+ {
+  "sigla": "Demografia UFRN",
+  "nome": "Demografia, Universidade Federal do Rio Grande do Norte",
+  "logo": "demografia-ufrn",
+  "w": 89,
+  "h": 90
+ },
+ {
+  "sigla": "Cedeplar",
+  "nome": "Centro de Desenvolvimento e Planejamento Regional, UFMG",
+  "logo": "cedeplar-ufmg",
+  "w": 146,
+  "h": 94
+ },
+ {
+  "sigla": "PROEX UFRN",
+  "nome": "Pró-Reitoria de Extensão, UFRN",
+  "logo": "proex-ufrn",
+  "w": 260,
+  "h": 91
+ },
+ {
+  "sigla": "PPGEO UERJ",
+  "nome": "Programa de Pós-Graduação em Geografia, UERJ",
+  "logo": "ppgeo-uerj",
+  "w": 179,
+  "h": 65
+ },
+ {
+  "sigla": "UERJ",
+  "nome": "Universidade do Estado do Rio de Janeiro",
+  "logo": "uerj",
+  "w": 106,
+  "h": 117
+ },
+ {
+  "sigla": "UERJ 75 anos",
+  "nome": "Marca comemorativa dos 75 anos da UERJ (1950–2025)",
+  "logo": "uerj-75-anos",
+  "w": 167,
+  "h": 76
+ },
+ {
+  "sigla": "ICS UERJ",
+  "nome": "Instituto de Ciências Sociais, UERJ",
+  "logo": "ics-uerj",
+  "w": 316,
+  "h": 83
+ },
+ {
+  "sigla": "IFCH Unicamp",
+  "nome": "Instituto de Filosofia e Ciências Humanas, Unicamp",
+  "logo": "ifch-unicamp",
+  "w": 118,
+  "h": 100
+ },
+ {
+  "sigla": "ENCE",
+  "nome": "Escola Nacional de Ciências Estatísticas, IBGE",
+  "logo": "ence-ibge",
+  "w": 109,
+  "h": 118
+ },
+ {
+  "sigla": "Unicamp",
+  "nome": "Universidade Estadual de Campinas",
+  "logo": "unicamp",
+  "w": 101,
+  "h": 109
+ },
+ {
+  "sigla": "UNEMAT",
+  "nome": "Universidade do Estado de Mato Grosso",
+  "logo": "unemat",
+  "w": 194,
+  "h": 80
+ }
+];
+window.EVENTO.patrocinio = [
+ {
+  "sigla": "CAPES",
+  "nome": "Coordenação de Aperfeiçoamento de Pessoal de Nível Superior",
+  "logo": "capes",
+  "w": 111,
+  "h": 103
+ }
+];
+// Vínculos da lista "Instituições participantes" que têm logotipo disponível.
+window.EVENTO.logoPorSigla = { "Cedeplar": "cedeplar-ufmg", "NEPO": "nepo-unicamp", "ENCE": "ence-ibge", "Unicamp": "unicamp", "UERJ": "uerj", "ICS": "ics-uerj", "UNEMAT": "unemat" };
+
+/*
+ * Fotos de palestrantes e comissões. Nenhuma foto foi incluída: não há fotos com
+ * licença livre desses nomes, e o ambiente de trabalho não consegue baixar imagens.
+ * Para adicionar: salve a foto em img/pessoas/ e registre aqui, com o nome exatamente
+ * como aparece na programação. Sem entrada, a página mostra as iniciais.
+ * Exemplo: "Laura Wong": "img/pessoas/laura-wong.jpg",
+ */
+window.FOTOS = {
+};
